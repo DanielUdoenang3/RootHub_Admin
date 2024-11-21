@@ -20,10 +20,33 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from roothub_cms_app import views
+from roothub_cms_app import Error, views,HodViews
 # from roothub_cms_app import settings
 
 urlpatterns = [
     path("demo",views.showDemoPage),
     path("admin/", admin.site.urls),
+
+    # Log in and Out
+    path("", views.showLoginPage),
+    path("get_user_details", views.Get_User_Details),
+    path("logout_user", views.logout_user),
+    path("dologin", views.dologin),
+
+
+    # Hod
+    path("admin_home", HodViews.admin_home),
+    path("add_staff", HodViews.add_staff),
+    path("add_staff_save", HodViews.add_staff_save),
+
+    # Courses and Price
+    path("add_course", HodViews.add_course),
+    path("add_course_save", HodViews.add_courses_save),
+    path("add_price_save", HodViews.add_price_save),
+    path("add_price", HodViews.add_price),
+
+
+    # Error Pages
+    path("error_500", Error.error_500),
+    path("error_404", Error.error_404),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,53 @@
+
+<!-- Main content -->
+
+<div>
+  {% for message in messages %}
+    {% if message.tags == "success" %}
+      <div class="alert alert-success alert-dismissible fade show center" role="alert" style="margin-top: 10px; margin-bottom: 10px; margin-left: 30px; margin-right: 30px; text-align: center;">
+        <strong>{{message}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="float: inline-end;">&times;</span>
+        </button>
+      </div>            
+    {% endif %}
+    {% if message.tags == "error" %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px; margin-bottom: 10px; margin-left: 30px; margin-right: 30px;text-align: center;">
+        <strong>{{message}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="float: inline-end;">&times;</span>
+        </button>
+      </div>
+    {% endif %}
+    {% if message.tags == "warning" %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 10px; margin-bottom: 10px; margin-left: 30px; margin-right: 30px; text-align: center;">
+        <strong>{{message}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="float: inline-end;">&times;</span>
+        </button>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<script>
+  // Wait until the document is fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+      // Select all elements with the class 'alert fade' 
+      var messages = document.querySelectorAll('.alert.fade');
+
+      // Loop through each element and apply the fade-out effect
+      messages.forEach(function(message) {
+          setTimeout(function() {
+              // Apply the fade-out transition
+              message.style.transition = 'opacity 1s ease-out'; // 1-second fade-out effect
+              message.style.opacity = 0;
+
+              // After the fade, hide the message entirely by setting display to 'none'
+              setTimeout(function() {
+                  message.style.display = 'none';
+              }, 1000); // 1 second after opacity reaches 0
+          }, 4500); // 4.5 seconds before starting the fade-out
+      });
+  });
+</script>

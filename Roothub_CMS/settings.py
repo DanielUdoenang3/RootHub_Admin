@@ -82,25 +82,25 @@ WSGI_APPLICATION = "Roothub_CMS.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-#using postgresql instead of sqlite
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql', 
-        'NAME': 'roothub_cms',                    
-        'USER': 'postgres',                    
-        'PASSWORD': '85275312',             
-        'HOST': 'localhost',                       
-        'PORT': '5432',                             
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# using postgresql instead of sqlite
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql', 
+#         'NAME': 'roothub_cms',                    
+#         'USER': 'roothub_user',                    
+#         'PASSWORD': 'Daniel',             
+#         'HOST': '127.0.0.1',                       
+#         'PORT': '5432',                             
+#     }
+# }
 
 #the database of choice is postgres and not sqlite 
 
@@ -138,9 +138,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'roothub_cms_app.CustomUser'
+
+APPEND_SLASH = False
+
+AUTHENTICATION_BACKEND=['roothub_cms_app.EmailBackEnd.EmailBackEnd']

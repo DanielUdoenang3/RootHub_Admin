@@ -1,0 +1,140 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% block page_title %}Add Staff{% endblock page_title %}
+{% block title %}Add Staff{% endblock title %}
+{% block main_content %}
+<!-- Main content -->
+
+<div class="row">
+  <div class="col-6">
+      <div class="col-6">
+        {% for message in messages %}
+          {% if message.tags == "success" %}
+            <div class="alert alert-success alert-dismissible fade-show center" role="success" style="margin-top: 10px;">
+              <strong>{{message}}</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" style="float: inline-end;">&times;</span>
+              </button>
+            </div>            
+          {% endif %}
+          {% if message.tags == "error" %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+              <strong>{{message}}</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" style="float: inline-end;">&times;</span>
+              </button>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+  </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">        
+            <div class="col-md-10 col-sm-8">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add Staff</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="/add_staff_save" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group col-sm-8">
+                      <label>First Name</label>
+                      <input type="text" class="form-control" placeholder="First Name" name="first_name">
+                  </div>
+                    
+                  <div class="form-group col-sm-8">
+                      <label>Middle Name</label>
+                      <input type="text" class="form-control" placeholder="Middle Name" name="middle_name">
+                  </div>
+                  
+                  <div class="form-group col-sm-8">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" placeholder="Last Name" name="last_name">
+                  </div>
+
+                  <div class="form-group col-sm-8">
+                    <label>Email address</label>
+                      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                  </div>
+
+                  <div class="form-group col-sm-8">
+                    <label>Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Password" name="password">
+                  </div>
+
+                  <div class="form-group col-sm-8">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="Emma" name="username">
+                  </div>
+
+                  <div class="form-group col-sm-12">
+                    <label>Gender</label>
+                    <select name="gender" class="form-control col-sm-8" required>
+                        <option hidden>Gender</option>
+                        <option value="Male" selected>Male</option>
+                        <option value="Female" selected>Female</option>
+                    </select>  
+                  </div>
+                  
+                  <div class="form-group col-sm-8">
+                    <label>Address</label>
+                    <input type="text" class="form-control" placeholder="Address" name="address">
+                  </div>
+
+                  <div class="form-group col-sm-8">
+                    <label>Mobile Number</label>
+                    <input type="number" class="form-control" placeholder="Phone Number" name="number">
+                  </div>
+
+                  <div class="form-group col-sm-12">
+                    <label>Religion</label>
+                    <select name="religion" class="form-control col-sm-8" required>
+                        <option hidden>Gender</option>
+                        <option value="Christianity" selected>Christianity</option>
+                        <option value="Muslim" >Muslim</option>
+                        <option value="Traditional" >Traditional</option>
+                    </select>  
+                </div>
+
+                <div class="form-group col-sm-8">
+                  <label>State</label>
+                  <input type="text" class="form-control" placeholder="State" name="state">
+                </div>
+
+                <div class="form-group col-sm-8">
+                  <label>Country</label>
+                  <input type="text" class="form-control" placeholder="Country" name="country">
+                </div>
+
+                <div class="card-footer col-sm-8">
+                  <button type="submit" class="btn btn-primary">Add Staff</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</section>
+
+<script>
+  // Wait until the document is fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+      // Select all elements with the class 'msg'
+      var messages = document.querySelectorAll('.fade');
+      
+      // Loop through each element and set a timeout to hide it after a few seconds
+      messages.forEach(function(message) {
+          setTimeout(function() {
+              message.style.display = 'none';
+          }, 4500); // 5000ms = 5 seconds
+      });
+  });
+</script>
+    <!-- /.content -->
+{% endblock main_content %}

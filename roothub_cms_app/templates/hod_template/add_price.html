@@ -1,0 +1,49 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% block page_title %}Add Prices{% endblock page_title %}
+{% block title %}Add Prices{% endblock title %}
+
+{% block main_content %}
+<!-- Main content -->
+ {% include "includes/messages.html" %}
+ <section class="content">
+  <div class="container-fluid">
+      <div class="row">        
+          <div class="col-md-8 col-sm-8">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Add Price</h3>
+            </div>
+          <form role="form" action="/add_price_save" method="POST">
+            {% csrf_token %} 
+            <div class="card-body"> 
+              <div class="form-group col-sm-10">
+                <label>Select a Course</label>
+                <select name="course" name="course" class="form-control col-sm-8" required>
+                    <option hidden>Course</option>
+                    <option value="">-- Select a Course --</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-group col-sm-8">
+                  <label style="margin-top: 10px;">Price</label>
+                  <input type="number" class="form-control" name="price" id="price" placeholder="Enter Price">
+                </div>
+
+                <div class="card-footer col-sm-8">
+                  <button style="margin-left: 5px;" type="submit" class="btn btn-primary">Add Price to the Selected Course</button>
+                </div>
+              </div>
+            </div>
+          </form>
+      </div>
+  </div>
+ </section>
+
+
+
+
+ {% endblock main_content %}
