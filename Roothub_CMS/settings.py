@@ -93,7 +93,7 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql', 
+#         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'roothub_cms',                    
 #         'USER': 'roothub_user',                    
 #         'PASSWORD': 'Daniel',             

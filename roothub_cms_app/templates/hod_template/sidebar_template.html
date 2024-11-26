@@ -1,5 +1,5 @@
 {% load static %}
-<aside class="main-sidebar sidebar-white-primary elevation-2">
+<aside class="main-sidebar sidebar-dark-primary elevation-2">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="{% static 'plugins/download.png' %}" alt="RootHub Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -15,7 +15,7 @@
           <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{user.first_name}} {{user.last_name}}</a>
         </div>
       </div>
 
@@ -51,6 +51,12 @@
                   <p>Delete Staff</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/view_trainer" class="nav-link">
+                  <i class="fas fa-table nav-icon"></i>
+                  <p>View Staff</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -63,7 +69,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/add_trainee" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add Student</p>
                 </a>
@@ -78,6 +84,12 @@
                 <a href="#" class="nav-link">
                   <i class="fas fa-times nav-icon"></i>
                   <p>Delete Student</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="view_trainee" class="nav-link">
+                  <i class="fas fa-table nav-icon"></i>
+                  <p>View Student</p>
                 </a>
               </li>
             </ul>
@@ -108,6 +120,12 @@
                 <a href="#" class="nav-link">
                   <i class="fas fa-times nav-icon"></i>
                   <p>Delete Course</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/view_course" class="nav-link">
+                  <i class="fas fa-table nav-icon"></i>
+                  <p>View Course</p>
                 </a>
               </li>
             </ul>

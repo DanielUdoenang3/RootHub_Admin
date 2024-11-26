@@ -25,7 +25,7 @@
         <p class="login-box-msg">Sign in</p>
 
         <form action="/dologin" method="POST" >
-            {% csrf_token %}
+          {% csrf_token %}
           <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Email" required name="email">
             <div class="input-group-append">

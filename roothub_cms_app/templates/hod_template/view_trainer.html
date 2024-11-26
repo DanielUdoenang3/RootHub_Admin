@@ -1,0 +1,81 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% block page_title %}View Trainers{% endblock page_title %}
+{% block title %}View Trainers{% endblock title %}
+
+{% block main_content %}
+  {% include "includes/messages.html" %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Current Trainers</h3>
+    
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+    
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover text-nowrap">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Email Address</th>
+                        {% comment %} <th>User Password</th> {% endcomment %}
+                        <th>User Name</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Religion</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Date Joined</th>
+                        <th>Last Login</th>
+                        <th>Is Active</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in trainer %}
+                        <tr>
+                            <td>{{data.admin.id}}</td>
+                            <td>{{data.admin.first_name}}</td>
+                            <td>{{data.admin.middle_name}}</td>
+                            <td>{{data.admin.last_name}}</td>
+                            <td><span class="tag tag-success">{{data.admin.email}}</span></td>
+                            {% comment %} <td>{{data.admin.password}}</td> {% endcomment %}
+                            <td>{{data.admin.username}}</td>
+                            <td>{{data.admin.gender}}</td>
+                            <td>{{data.admin.address}}</td>
+                            <td>{{data.admin.religion}}</td>
+                            <td>{{data.admin.state}}</td>
+                            <td>{{data.admin.country}}</td>
+                            <td>{{data.admin.date_joined}}</td>
+                            <td>{{data.admin.last_login}}</td>
+                            <td>{{data.admin.is_active}}</td>
+    
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

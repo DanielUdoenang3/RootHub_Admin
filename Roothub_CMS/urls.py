@@ -38,12 +38,18 @@ urlpatterns = [
     path("admin_home", HodViews.admin_home),
     path("add_staff", HodViews.add_staff),
     path("add_staff_save", HodViews.add_staff_save),
+    path("add_trainee", HodViews.add_student),
+    path("view_trainee", HodViews.view_trainee),
+    path("add_trainee_save", HodViews.add_student_save),
+    path("view_trainer", HodViews.view_trainer),
+
 
     # Courses and Price
     path("add_course", HodViews.add_course),
     path("add_course_save", HodViews.add_courses_save),
-    path("add_price_save", HodViews.add_price_save),
-    path("add_price", HodViews.add_price),
+    path("view_course", HodViews.view_course),
+    # path("add_price_save", HodViews.add_price_save),
+    # path("add_price", HodViews.add_price),
 
 
     # Error Pages
