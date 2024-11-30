@@ -1,10 +1,13 @@
 import uuid
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.core.validators import RegexValidator
+from djmoney.models.fields import MoneyField
 
 # Create your models here.
 # class MagicLinkToken(models.Model):
@@ -22,15 +25,13 @@ class CustomUser(AbstractUser):
   user_type= models.CharField(default=1,choices=user_type_data,max_length=10)
 
   middle_name = models.CharField(max_length=255, blank=True, null=True)
-  gender = models.CharField(max_length=50, choices=[('Male', 'Male'), ('Female', 'Female')], blank=True, null=True)
-  address = models.TextField(blank=True, null=True)
-  religion = models.CharField(max_length=255, blank=True, null=True)
-  state = models.CharField(max_length=255, blank=True, null=True)
-  country = models.CharField(max_length=255, blank=True, null=True)
+  profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
+  
 
 class Admin(models.Model):
   id = models.AutoField(primary_key=True)
   admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+  profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now_add=True)
   objects = models.Manager()
@@ -38,26 +39,44 @@ class Admin(models.Model):
 class Trainers(models.Model):
   id = models.AutoField(primary_key=True)
   admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-  created_at = models.DateTimeField(auto_now_add=True)
+  gender = models.CharField(max_length=50, choices=[('Male', 'Male'), ('Female', 'Female')], blank=True, null=True)
+  address = models.TextField(blank=True, null=True)
+  religion = models.CharField(max_length=255, blank=True, null=True)
+  state = models.CharField(max_length=255, blank=True, null=True)
+  phone = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',
+                message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+            )
+        ]
+  )
+  country = models.CharField(max_length=255, blank=True, null=True)
+  profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
   updated_at = models.DateTimeField(auto_now_add=True)
   objects = models.Manager()
 
 class Courses(models.Model):
   id = models.AutoField(primary_key=True)
   course_name = models.CharField(max_length=255)
-  price_name = models.DecimalField(max_digits=10, decimal_places=2)
+  price_name = MoneyField(max_digits=10, decimal_places=2, default_currency="NGN")
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   objects = models.Manager()
 
 
-
 class Trainee(models.Model):
   id = models.AutoField(primary_key=True)
   admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-  gender = models.CharField(max_length=255)
-  profile_pic = models.FileField()
-  address = models.TextField()
+  gender = models.CharField(max_length=50, choices=[('Male', 'Male'), ('Female', 'Female')], blank=True, null=True)
+  address = models.TextField(blank=True, null=True)
+  religion = models.CharField(max_length=255, blank=True, null=True)
+  state = models.CharField(max_length=255, blank=True, null=True)
+  country = models.CharField(max_length=255, blank=True, null=True)
+  profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
   course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now_add=True)

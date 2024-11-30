@@ -15,7 +15,7 @@
           <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{user.first_name}} {{user.last_name}}</a>
+          <a href="#" class="d-block">{{user.username|capfirst}}</a>
         </div>
       </div>
 
@@ -28,18 +28,18 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Staff
+                Trainer
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/add_staff" class="nav-link">
+                <a href="/add_trainer" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Staff</p>
+                  <p>Add Trainer</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {% comment %} <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
                   <p>Edit Staff</p>
@@ -50,11 +50,11 @@
                   <i class="fas fa-times nav-icon"></i>
                   <p>Delete Staff</p>
                 </a>
-              </li>
+              </li> {% endcomment %}
               <li class="nav-item">
                 <a href="/view_trainer" class="nav-link">
                   <i class="fas fa-table nav-icon"></i>
-                  <p>View Staff</p>
+                  <p>View Trainer</p>
                 </a>
               </li>
             </ul>
@@ -63,7 +63,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Student
+                Trainee
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -71,10 +71,10 @@
               <li class="nav-item">
                 <a href="/add_trainee" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Student</p>
+                  <p>Add Trainee</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {% comment %} <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
                   <p>Edit Student</p>
@@ -85,11 +85,11 @@
                   <i class="fas fa-times nav-icon"></i>
                   <p>Delete Student</p>
                 </a>
-              </li>
+              </li> {% endcomment %}
               <li class="nav-item">
                 <a href="view_trainee" class="nav-link">
                   <i class="fas fa-table nav-icon"></i>
-                  <p>View Student</p>
+                  <p>View Trainee</p>
                 </a>
               </li>
             </ul>
@@ -110,7 +110,7 @@
                   <p>Add Course</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {% comment %} <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
                   <p>Edit Course</p>
@@ -121,7 +121,7 @@
                   <i class="fas fa-times nav-icon"></i>
                   <p>Delete Course</p>
                 </a>
-              </li>
+              </li> {% endcomment %}
               <li class="nav-item">
                 <a href="/view_course" class="nav-link">
                   <i class="fas fa-table nav-icon"></i>

@@ -1,7 +1,7 @@
 {% extends "hod_template/base_template.html" %}
 {% load static %}
-{% block page_title %}Add Course with Prices{% endblock page_title %}
-{% block title %}Add Course and Prices{% endblock title %}
+{% block page_title %}Edit Course with Prices{% endblock page_title %}
+{% block title %}Edit Course and Prices{% endblock title %}
 
 {% block main_content %}
   {% include "includes/messages.html" %}
@@ -13,35 +13,37 @@
                   <!-- <h3 class="page-title">Add Trainer</h3> -->
                   <ul class="breadcrumb">
                       <li class="breadcrumb-item"><a href="/view_course">Courses</a></li>
-                      <li class="breadcrumb-item active">Add Course</li>
+                      <li class="breadcrumb-item active">Edit Course</li>
+                      <li class="breadcrumb-item active">{{ courses.course_name }} ---- {{ courses.price_name }}</li>
                   </ul>
               </div>
           </div>
         </div>
           <div class="row">        
-            <div class="col-md-10 col-sm-8">
+              <div class="col-md-10 col-sm-8">
               <!-- general form elements -->
               <div class="card card-primary">
-                <form role="form" action="/add_course_save" method="post">
+                <form role="form"  method="POST" action="{% url "edit_course_save" courses.id %}" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="card-body">
                     <div class="form-group col-sm-8">
                       <label>Course Name</label>
-                      <input type="text" class="form-control" placeholder="Course Name" name="course_name">
+                      <input type="text" class="form-control" placeholder="Course Name" name="course_name" value="{{ courses.course_name }}">
                     </div>
 
                     <div class="form-group col-sm-8">
                       <label style="margin-top: 10px;">Price</label>
-                      <input type="tel" class="form-control" name="price" id="price" placeholder="Enter Price">
+                      <input type="tel" class="form-control" name="price" id="price" placeholder="Enter Price" value="{{ courses.price_name }}">
                     </div>
 
                     <div class="card-footer col-sm-8">
-                      <button type="submit" class="btn btn-primary">Add Course</button>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                   </div>
                 </form>
-              </div>
-            </div>
+                      
+                
+              <!-- /.card -->
           </div>
       </div>
   </section>

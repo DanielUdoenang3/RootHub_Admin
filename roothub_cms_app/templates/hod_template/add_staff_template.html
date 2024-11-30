@@ -1,23 +1,31 @@
 {% extends "hod_template/base_template.html" %}
 {% load static %}
-{% block page_title %}Add Staff{% endblock page_title %}
-{% block title %}Add Staff{% endblock title %}
+{% block page_title %}Add Trainer{% endblock page_title %}
+{% block title %}Add Trainer{% endblock title %}
 {% block main_content %}
   <!-- Main content -->
 
   {% include "includes/messages.html" %}
   <section class="content">
       <div class="container-fluid">
-          <div class="row">        
+        <div class="page-header">
+          <div class="row align-items-center">
+              <div class="col">
+                  <!-- <h3 class="page-title">Add Trainer</h3> -->
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/view_trainer">Trainers</a></li>
+                      <li class="breadcrumb-item active">Add Trainer</li>
+                  </ul>
+              </div>
+          </div>
+        </div>
+          <div class="row">
               <div class="col-md-10 col-sm-8">
               <!-- general form elements -->
               <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Add Staff</h3>
-                </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="/add_staff_save" method="post">
+                <form role="form" action="/add_trainer_save" method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="card-body">
                     <div class="form-group col-sm-8">
@@ -72,6 +80,11 @@
                     <div class="form-group col-sm-8">
                       <label>Mobile Number</label>
                       <input type="tel" class="form-control" placeholder="Phone Number" name="number">
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label>Profile Picture</label>
+                      <input type="file" name="profile_pic" class="form-control col-sm-8" accept="image/*" placeholder="Profile Picture" height="100">
                     </div>
 
                     <div class="form-group col-sm-12">

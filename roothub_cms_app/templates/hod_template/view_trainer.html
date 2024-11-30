@@ -7,6 +7,20 @@
   {% include "includes/messages.html" %}
 <section class="content">
     <div class="container-fluid">
+      <div class="page-header">
+        <div class="row align-items-center">
+           <div class="col">
+              <!-- <h3 class="page-title">View Trainer</h3> -->
+              <ul class="breadcrumb">
+                 <li class="breadcrumb-item"><a href="/admin_home">Dashboard</a></li>
+                 <li class="breadcrumb-item active">Trainers</li>
+              </ul>
+           </div>
+           <div class="col-auto text-right float-right ml-auto">
+              <a href="/add_trainer" class="btn btn-primary" style="margin-bottom: 15px;"><i class="fas fa-plus"></i></a>
+           </div>
+        </div>
+      </div>
         <div class="row">
             <div class="col-12">
               <div class="card">
@@ -30,41 +44,54 @@
                   <table class="table table-hover text-nowrap">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Middle Name</th>
-                        <th>Last Name</th>
-                        <th>Email Address</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Email Address</th>
                         {% comment %} <th>User Password</th> {% endcomment %}
-                        <th>User Name</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Religion</th>
-                        <th>State</th>
-                        <th>Country</th>
-                        <th>Date Joined</th>
-                        <th>Last Login</th>
-                        <th>Is Active</th>
+                        <th class="text-center">Username</th>
+                        <th class="text-center">Gender</th>
+                        <th class="text-center">Phone Number</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Religion</th>
+                        <th class="text-center">State</th>
+                        <th class="text-center">Country</th>
+                        <th class="text-center">Date Joined</th>
+                        <th class="text-center">Last Login</th>
+                        <th class="text-center">Is Active</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                        {% for data in trainer %}
+                        {% for trainer in trainers %}
                         <tr>
-                            <td>{{data.admin.id}}</td>
-                            <td>{{data.admin.first_name}}</td>
-                            <td>{{data.admin.middle_name}}</td>
-                            <td>{{data.admin.last_name}}</td>
-                            <td><span class="tag tag-success">{{data.admin.email}}</span></td>
-                            {% comment %} <td>{{data.admin.password}}</td> {% endcomment %}
-                            <td>{{data.admin.username}}</td>
-                            <td>{{data.admin.gender}}</td>
-                            <td>{{data.admin.address}}</td>
-                            <td>{{data.admin.religion}}</td>
-                            <td>{{data.admin.state}}</td>
-                            <td>{{data.admin.country}}</td>
-                            <td>{{data.admin.date_joined}}</td>
-                            <td>{{data.admin.last_login}}</td>
-                            <td>{{data.admin.is_active}}</td>
+                            <td>
+                              {% if trainer.admin.profile_pic and trainer.admin.profile_pic.url %}
+                                <a href=""><img class="avatar-img rounded-circle" src="{{ trainer.admin.profile_pic }}" style="width: 15%;"></a>
+                              {% else %}
+                              <a href=""><img class="avatar-img rounded-circle" src="{% static 'blank.webp' %}" style="width: 15%;"></a>
+                              {% endif %}
+                              <a href="" style="color: black;margin-right: 50px;">{{trainer.admin.first_name|capfirst}} {{trainer.admin.middle_name|capfirst}} {{trainer.admin.last_name|capfirst}}</a>
+                            </td>
+                            <td>{{trainer.admin.email}}</td>
+                            <td>{{trainer.admin.username}}</td>
+                            <td>{{trainer.gender}}</td>
+                            <td>{{trainer.phone}}</td>
+                            <td>{{trainer.address}}</td>
+                            <td>{{trainer.religion}}</td>
+                            <td>{{trainer.state}}</td>
+                            <td>{{trainer.country}}</td>
+                            <td>{{trainer.admin.date_joined}}</td>
+                            <td>{{trainer.admin.last_login}}</td>
+                            <td>{{trainer.admin.is_active}}</td>
+                            <td class="text-right">
+                              <div class="actions">
+                                <a href="/edit_trainer/{{ trainer.admin.id }}" class="btn btn-sm bg-success-light mr-2">
+                                  <i class="fas fa-pen"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm bg-danger-light">
+                                  <i class="fas fa-trash"></i>
+                                </a>
+                              </div>
+                            </td>
     
                         </tr>
                         {% endfor %}
