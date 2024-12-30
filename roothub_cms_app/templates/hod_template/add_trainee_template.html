@@ -1,9 +1,9 @@
 {% extends "hod_template/base_template.html" %}
 {% load static %}
-{% block page_title %}Add Trainer{% endblock page_title %}
-{% block title %}Add Trainer{% endblock title %}
+{% block page_title %}Add Trainee{% endblock page_title %}
+{% block title %}Add Trainee{% endblock title %}
 {% block main_content %}
-  <!-- Main content -->
+<!-- Main content -->
 
   {% include "includes/messages.html" %}
   <section class="content">
@@ -13,24 +13,22 @@
               <div class="col">
                   <!-- <h3 class="page-title">Add Trainer</h3> -->
                   <ul class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="/view_trainer">Trainers</a></li>
-                      <li class="breadcrumb-item active">Add Trainer</li>
+                      <li class="breadcrumb-item"><a href="{% url "view_trainee" %}">Trainees</a></li>
+                      <li class="breadcrumb-item active">Add Trainee</li>
                   </ul>
               </div>
           </div>
         </div>
-          <div class="row">
+          <div class="row">        
               <div class="col-md-10 col-sm-8">
               <!-- general form elements -->
               <div class="card card-primary">
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form" action="/add_trainer_save" method="post" enctype="multipart/form-data">
+                <form role="form" action="/add_trainee_save" method="post">
                   {% csrf_token %}
                   <div class="card-body">
                     <div class="form-group col-sm-8">
                         <label>First Name</label>
-                        <input type="text" class="form-control" placeholder="First Name" name="first_name" autofocus>
+                        <input type="text" class="form-control" placeholder="First Name" name="first_name" required autofocus>
                     </div>
                       
                     <div class="form-group col-sm-8">
@@ -40,17 +38,17 @@
                     
                     <div class="form-group col-sm-8">
                       <label>Last Name</label>
-                      <input type="text" class="form-control" placeholder="Last Name" name="last_name">
+                      <input type="text" class="form-control" placeholder="Last Name" name="last_name" required>
                     </div>
 
                     <div class="form-group col-sm-8">
                       <label>Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
                     </div>
 
                     <label class="form-group col-sm-8">Password</label>
                     <div class="form-group col-sm-8 input-group mb-10">
-                      <input type="Password" class="form-control" id="password" placeholder="Password" name="password">
+                      <input type="Password" class="form-control" id="password" placeholder="********" name="password" required>
                       <div class="input-group-append">
                         <div class="form-control">
                           <span class="fa fa-eye toggle-password" onclick="togglePassword()"></span>
@@ -60,7 +58,7 @@
 
                     <div class="form-group col-sm-8">
                       <label>Username</label>
-                      <input type="text" class="form-control" placeholder="Emma" name="username">
+                      <input type="text" class="form-control" placeholder="Emma" name="username" required>
                     </div>
 
                     <div class="form-group col-sm-12">
@@ -68,23 +66,23 @@
                       <select name="gender" class="form-control col-sm-8" required>
                           <option hidden>Gender</option>
                           <option value="Male" selected>Male</option>
-                          <option value="Female">Female</option>
+                          <option value="Female" selected>Female</option>
                       </select>  
                     </div>
                     
                     <div class="form-group col-sm-8">
                       <label>Address</label>
-                      <input type="text" class="form-control" placeholder="Address" name="address">
+                      <input type="text" class="form-control" placeholder="Address" name="address" required>
                     </div>
 
                     <div class="form-group col-sm-8">
                       <label>Mobile Number</label>
-                      <input type="tel" class="form-control" placeholder="Phone Number" name="number">
+                      <input type="tel" class="form-control" placeholder="Phone Number" name="number" required>
                     </div>
 
                     <div class="form-group col-sm-8">
                       <label>Profile Picture</label>
-                      <input type="file" name="profile_pic" class="form-control col-sm-8" accept="image/*" placeholder="Profile Picture" height="100">
+                      <input type="file" name="profile_pic" class="form-control col-sm-8" accept="image/*" placeholder="Profile Picture" style="margin-bottom: 5px;">
                     </div>
 
                     <div class="form-group col-sm-12">
@@ -93,22 +91,32 @@
                           <option hidden>Gender</option>
                           <option value="Christianity" selected>Christianity</option>
                           <option value="Muslim" >Muslim</option>
-                          <option value="Traditional" >Others</option>
+                          <option value="Traditional" >Traditional</option>
                       </select>  
                   </div>
 
                   <div class="form-group col-sm-8">
                     <label>State</label>
-                    <input type="text" class="form-control" placeholder="State" name="state">
+                    <input type="text" class="form-control" placeholder="State" name="state" required>
                   </div>
 
                   <div class="form-group col-sm-8">
                     <label>Country</label>
-                    <input type="text" class="form-control" placeholder="Country" name="country">
+                    <input type="text" class="form-control" placeholder="Country" name="country" required>
                   </div>
 
+                 <div class="form-group col-sm-12"> 
+                    <label>Select a Course</label>
+                    <select name="course" name="course" class="form-control col-sm-8" required>
+                      <option value="" disabled hidden>Select a Course you would love to Study</option>
+                      {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.course_name }} ---- {{course.price_name}} </option>
+                      {% endfor %}
+                    </select>
+                 </div>   
+
                   <div class="card-footer col-sm-8">
-                    <button type="submit" class="btn btn-primary">Add Staff</button>
+                    <button type="submit" class="btn btn-primary">Add Trainee</button>
                   </div>
                 </form>
               </div>

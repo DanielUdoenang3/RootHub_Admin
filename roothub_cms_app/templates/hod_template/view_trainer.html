@@ -56,7 +56,6 @@
                         <th class="text-center">Country</th>
                         <th class="text-center">Date Joined</th>
                         <th class="text-center">Last Login</th>
-                        <th class="text-center">Is Active</th>
                         <th class="text-center">Action</th>
                       </tr>
                     </thead>
@@ -81,7 +80,6 @@
                             <td>{{trainer.country}}</td>
                             <td>{{trainer.admin.date_joined}}</td>
                             <td>{{trainer.admin.last_login}}</td>
-                            <td>{{trainer.admin.is_active}}</td>
                             <td class="text-right">
                               <div class="actions">
                                 <a href="/edit_trainer/{{ trainer.admin.id }}" class="btn btn-sm bg-success-light mr-2">
@@ -92,7 +90,6 @@
                                 </a>
                               </div>
                             </td>
-    
                         </tr>
                         {% endfor %}
                     </tbody>

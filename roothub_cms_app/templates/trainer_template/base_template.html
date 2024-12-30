@@ -30,6 +30,7 @@
   {% block custom_css %}{% endblock custom_css %}
 
   <style>
+        /* General Styles for Dropdown */
     .navbar-nav .nav-item .dropdown-menu {
       border: none;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -101,12 +102,12 @@
   </style>
   
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" >
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
@@ -120,14 +121,14 @@
     </form>
 
     <ul class="navbar-nav ml-auto nav user-menu">
-      <li class="nav-item dropdown has-arrow" >
+      <li class="nav-item dropdown has-arrow">
         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
           <span class="user-img">
             {% if user.profile_pic and user.profile_pic.url %}
               <!-- Display the profile picture -->
               <img 
                 class="rounded-circle" 
-                src="{{ user.profile_pic.url }}" 
+                src="{{ user.profile_pic }}" 
                 width="31" 
                 height="31" 
                 style="object-fit: cover;" 
@@ -150,7 +151,7 @@
               {% if user.profile_pic and user.profile_pic.url %}
                 <!-- Display the larger profile picture -->
                 <img 
-                  src="{{ user.profile_pic.url }}" 
+                  src="{{ user.profile_pic }}" 
                   alt="User Image" 
                   class="avatar-img rounded-circle" 
                   style="width: 60px; height: 60px; object-fit: cover;">
@@ -187,11 +188,9 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  {% include "hod_template/sidebar_template.html" with user=user %}
+  {% include "trainer_template/sidebar_template.html" with user=user %}
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-     <!-- Content Header (Page header) -->
      <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -205,17 +204,17 @@
               <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
               <li class="breadcrumb-item active">Dashboard</li>
             </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+          </div>
+        </div>
+      </div>
     </div>
   
     <!-- /.content-header -->
 
     {% block main_content %}{% endblock main_content %}
   </div>
-  <!-- /.content-wrapper -->
- {% include "hod_template/footer.html" %}
+  
+  {% include "trainer_template/footer.html" %} 
 
 
   <!-- /.control-sidebar -->
@@ -260,3 +259,4 @@
 
 </body>
 </html>
+

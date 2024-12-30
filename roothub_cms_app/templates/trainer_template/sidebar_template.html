@@ -1,0 +1,70 @@
+{% load static %}
+<style>
+  .main-sidebar {
+    background-color: #f4f4f4; /* Light gray background */
+  }
+
+  .nav-sidebar .nav-link {
+    color: #333; /* Dark gray text */
+  }
+
+  .nav-sidebar .nav-link.active {
+    background-color: #007bff; /* Blue background for active link */
+    color: white; /* White text for active link */
+  }
+
+  .nav-treeview .nav-link {
+    color: #555; /* Medium gray text */
+  }
+
+  .nav-treeview .nav-link.active {
+    background-color: #6c757d; /* Darker gray for active state */
+    color: white;
+  }
+</style>
+<aside class="main-sidebar  elevation-2">
+  <a href="#" class="brand-link">
+    <img src="{% static 'plugins/download.png' %}" alt="RootHub Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light"><strong>RootHub</strong></span>
+  </a>
+
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        {% if user.profile_pic and user.profile_pic.url %}
+          <a href=""><img class="avatar-img rounded-circle" src="{{ user.profile_pic.url }}"></a>
+        {% else %}
+          <a href=""><img class="avatar-img rounded-circle" src="{% static 'blank.webp' %}"></a>
+        {% endif %}
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">{{ user.username|capfirst }}</a>
+      </div>
+    </div>
+
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="{% url "trainer_home" %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Home
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url "trainer_take_attendance" %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Take Attendance
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

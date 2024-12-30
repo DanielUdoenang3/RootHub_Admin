@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 #importing the os module so that I can make use of os.path.join
 import os
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 MEIDA_ROOT = os.path.join(BASE_DIR,"media")
 
 STATIC_URL = "/static/"
@@ -56,6 +56,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "roothub_cms_app.middleware.LoginCheckMiddleware",
+    # "roothub_cms_app.middleware.Custom404Middleware",
 ]
 
 ROOT_URLCONF = "Roothub_CMS.urls"

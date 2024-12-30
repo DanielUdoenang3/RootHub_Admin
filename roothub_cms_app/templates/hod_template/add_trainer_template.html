@@ -1,0 +1,138 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% block page_title %}Add Trainer{% endblock page_title %}
+{% block title %}Add Trainer{% endblock title %}
+{% block main_content %}
+  <!-- Main content -->
+
+  {% include "includes/messages.html" %}
+  <section class="content">
+      <div class="container-fluid">
+        <div class="page-header">
+          <div class="row align-items-center">
+              <div class="col">
+                  <!-- <h3 class="page-title">Add Trainer</h3> -->
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/view_trainer">Trainers</a></li>
+                      <li class="breadcrumb-item active">Add Trainer</li>
+                  </ul>
+              </div>
+          </div>
+        </div>
+          <div class="row">
+              <div class="col-md-10 col-sm-8">
+               <div class="card card-primary">
+                <form role="form" action="{% url "add_trainer_save" %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="card-body">
+                    <div class="form-group col-sm-8">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" placeholder="First Name" name="first_name"  required autofocus>
+                    </div>
+                      
+                    <div class="form-group col-sm-8">
+                        <label>Middle Name</label>
+                        <input type="text" class="form-control" placeholder="Middle Name" name="middle_name" >
+                    </div>
+                    
+                    <div class="form-group col-sm-8">
+                      <label>Last Name</label>
+                      <input type="text" class="form-control" placeholder="Last Name" name="last_name" required>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label>Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                    </div>
+
+                    <label class="form-group col-sm-8">Password</label>
+                    <div class="form-group col-sm-8 input-group mb-10">
+                      <input type="Password" class="form-control" id="password" placeholder="********" name="password" required>
+                      <div class="input-group-append">
+                        <div class="form-control">
+                          <span class="fa fa-eye toggle-password" onclick="togglePassword()"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label>Username</label>
+                      <input type="text" class="form-control" placeholder="Emma" name="username" required>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                      <label>Gender</label>
+                      <select name="gender" class="form-control col-sm-8" required>
+                          <option hidden>Gender</option>
+                          <option value="Male" selected>Male</option>
+                          <option value="Female">Female</option>
+                      </select>  
+                    </div>
+                    
+                    <div class="form-group col-sm-8">
+                      <label>Address</label>
+                      <input type="text" class="form-control" placeholder="Address" name="address" required>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label>Mobile Number</label>
+                      <input type="tel" class="form-control" placeholder="Phone Number" name="number" required>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label>Profile Picture</label>
+                      <input type="file" name="profile_pic" class="form-control col-sm-8" accept="image/*" placeholder="Profile Picture" height="100">
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                      <label>Religion</label>
+                      <select name="religion" class="form-control col-sm-8" required>
+                          <option hidden>Gender</option>
+                          <option value="Christianity" selected>Christianity</option>
+                          <option value="Muslim" >Muslim</option>
+                          <option value="Traditional" >Others</option>
+                      </select>  
+                  </div>
+
+                  <div class="form-group col-sm-8">
+                    <label>State</label>
+                    <input type="text" class="form-control" placeholder="State" name="state" required>
+                  </div>
+
+                  <div class="form-group col-sm-8">
+                    <label>Country</label>
+                    <input type="text" class="form-control" placeholder="Country" name="country" required>
+                  </div>
+
+                  <div class="card-footer col-sm-8">
+                    <button type="submit" class="btn btn-primary">Add Staff</button>
+                  </div>
+                </form>
+               </div>
+              </div>
+              <!-- /.card -->
+          </div>
+      </div>
+  </section>
+    <!-- /.content -->
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+  // Toggle the password visibility
+  function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.querySelector('.toggle-password');
+
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text'; 
+      toggleIcon.classList.remove('fa-eye');
+      toggleIcon.classList.add('fa-eye-slash'); 
+    } else {
+      passwordInput.type = 'password';  // Hide password
+      toggleIcon.classList.remove('fa-eye-slash');
+      toggleIcon.classList.add('fa-eye');
+    }
+  }
+</script>
+{% endblock custom_js %}

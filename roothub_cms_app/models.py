@@ -1,6 +1,5 @@
 import uuid
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
@@ -11,7 +10,7 @@ from djmoney.models.fields import MoneyField
 
 # Create your models here.
 # class MagicLinkToken(models.Model):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='magic_tokens')
+#     admin = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='magic_tokens')
 #     token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 #     created_at = models.DateTimeField(auto_now_add=True)
 #     is_used = models.BooleanField(default=False)
@@ -25,7 +24,7 @@ class CustomUser(AbstractUser):
   user_type= models.CharField(default=1,choices=user_type_data,max_length=10)
 
   middle_name = models.CharField(max_length=255, blank=True, null=True)
-  profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
+  profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp", blank=True, null=True)
   
 
 class Admin(models.Model):
@@ -56,17 +55,26 @@ class Trainers(models.Model):
   )
   country = models.CharField(max_length=255, blank=True, null=True)
   profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
+  course_id = models.ManyToManyField(
+        'Courses',
+        related_name='trainers')
   updated_at = models.DateTimeField(auto_now_add=True)
   objects = models.Manager()
+
+  def __str__(self):
+    return f"Trainer {self.admin.first_name} {self.admin.last_name} from {self.address} details"
 
 class Courses(models.Model):
   id = models.AutoField(primary_key=True)
   course_name = models.CharField(max_length=255)
   price_name = MoneyField(max_digits=10, decimal_places=2, default_currency="NGN")
+  trainer_id = models.ForeignKey(Trainers, blank=True, null=True, on_delete=models.CASCADE)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   objects = models.Manager()
 
+  def __str__(self):
+    return self.course_name
 
 class Trainee(models.Model):
   id = models.AutoField(primary_key=True)
@@ -75,19 +83,34 @@ class Trainee(models.Model):
   address = models.TextField(blank=True, null=True)
   religion = models.CharField(max_length=255, blank=True, null=True)
   state = models.CharField(max_length=255, blank=True, null=True)
+  phone = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',
+                message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+            )
+        ]
+  )
   country = models.CharField(max_length=255, blank=True, null=True)
   profile_pic = models.ImageField(upload_to="profile_pic", default="blank.webp")
-  course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING)
+  course_id = models.ForeignKey(Courses,blank=True, null=True, on_delete=models.CASCADE, related_name="trainees")
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now_add=True)
   objects = models.Manager()
 
+  def __str__(self):
+    return f"Trainee {self.admin.first_name} {self.admin.last_name}'s details"
+
 class Attendance(models.Model):
   id = models.AutoField(primary_key=True)
-  course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING)
-  attendance_date = models.DateTimeField(auto_now_add=True)
+  course = models.ForeignKey(Courses, on_delete=models.CASCADE)
+  trainees = models.ManyToManyField(Trainee, related_name="attendance_records")
+  attendance_date = models.DateField(default=timezone.now)
   created_at = models.DateTimeField(auto_now_add=True)
-  updated_at = models.DateTimeField(auto_now_add=True)
+  updated_at = models.DateTimeField(auto_now=True)
   objects = models.Manager()
 
 class Presentation(models.Model):
@@ -104,8 +127,8 @@ class Presentation(models.Model):
 
 class AttendanceReport(models.Model):
   id = models.AutoField(primary_key=True)
-  student_id = models.ForeignKey(Trainee, on_delete=models.DO_NOTHING)
-  attendance_id = models.ForeignKey(Attendance, on_delete=models.DO_NOTHING)
+  student_id = models.ForeignKey(Trainee, on_delete=models.CASCADE)
+  attendance_id = models.ForeignKey(Attendance, on_delete=models.CASCADE)
   status = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now_add=True)

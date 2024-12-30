@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from roothub_cms_app.EmailBackEnd import EmailBackEnd
 from django.contrib.auth import login,logout
 from django.contrib import messages
+from django.urls import reverse
 
 from roothub_cms_app.models import Admin
 
@@ -26,11 +27,11 @@ def dologin (request):
         if user!=None:
             login(request,user)
             if user.user_type == "1":
-                return HttpResponseRedirect("admin_home")
+                return HttpResponseRedirect("/admin_home")
             elif user.user_type == "2":
-                return HttpResponse("Welcome Boss")
+                return HttpResponseRedirect("/trainer_home")
             elif user.user_type == "3":
-                return HttpResponse("Student")
+                return HttpResponse("/trainee_home")
         else:
             messages.error(request, "Invalid Login Details")
             return HttpResponseRedirect("/")

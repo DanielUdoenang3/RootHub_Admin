@@ -10,7 +10,6 @@
         <div class="page-header">
           <div class="row align-items-center">
              <div class="col">
-                {% comment %} <h3 class="page-title">View Courses</h3> {% endcomment %}
                 <ul class="breadcrumb">
                    <li class="breadcrumb-item"><a href="/admin_home">Dashboard</a></li>
                    <li class="breadcrumb-item active">Courses</li>
@@ -21,59 +20,55 @@
              </div>
           </div>
         </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Courses and their corresponding Prices</h3>
-                  <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body table-responsive p-0">
-                  <table class="table table-hover text-nowrap">
-                    <thead>
-                      <tr>
-                        <th class="text-center">ID</th>
-                        <th class="text-center">Course Name</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        {% for course in courses %}
-                            <td>{{course.id}}</td>
-                            <td>{{course.course_name}}</td>
-                            <td>{{course.price_name}}</td>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Courses and their corresponding Prices</h3>
+              </div>
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th class="text-center">ID</th>
+                      <th class="text-center">Course Name</th>
+                      <th class="text-center">Price</th>
+                      <th class="text-center">Assigned Trainer</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for course in courses %}
+                          <tr>
+                            <td>{{ course.id }}</td>
+                            <td>{{ course.course_name }}</td>
+                            <td>{{ course.price_name }}</td>
                             <td class="text-center">
+                              {% if course.trainer_id %}
+                                  {{ course.trainer_id.admin.first_name }} {{ course.trainer_id.admin.last_name }}
+                              {% else %}
+                                  No trainer assigned
+                              {% endif %}
+                            </td>
+                            <td class="text-right">
                               <div class="actions">
-                                 <a href="/edit_course/{{ course.id }}" class="btn btn-sm bg-success-light mr-2">
-                                 <i class="fas fa-pen"></i>
-                                 </a>
-                                 <a href="#" class="btn btn-sm bg-danger-light">
-                                 <i class="fas fa-trash"></i>
-                                 </a>
+                                <a href="/edit_course/{{ course.id }}" class="btn btn-sm bg-success-light mr-2">
+                                  <i class="fas fa-pen"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm bg-danger-light">
+                                  <i class="fas fa-trash"></i>
+                                </a>
                               </div>
                             </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
-                <!-- /.card-body -->
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
               </div>
-              <!-- /.card -->
             </div>
           </div>
+        </div>
       </div>
   </section>
+
 {% endblock main_content %}

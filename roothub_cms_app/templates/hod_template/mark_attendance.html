@@ -1,0 +1,124 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% block page_title %}Mark Attendance{% endblock %}
+{% block title %}Mark Attendance{% endblock %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Attendance</a></li>
+                        <li class="breadcrumb-item active">Mark Attendance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Mark Attendance</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="attendance-form" method="post" action="{% url 'mark_attendance' %}">
+                            {% csrf_token %}
+
+                            <!-- Course Selection -->
+                            <div class="form-group col-sm-8">
+                                <label for="course">Select Course</label>
+                                <select name="course_id" id="course" class="form-control" required>
+                                    <option value="" disabled selected>Select a course</option>
+                                    {% for course in courses %}
+                                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Date Selection -->
+                            <div class="form-group col-sm-8">
+                                <label for="date">Select Date</label>
+                                <input type="date" name="date" id="date" class="form-control" required>
+                            </div>
+
+                            <!-- Trainee List -->
+                            <div id="trainee-list" class="form-group col-sm-8">
+                                <p>Select a course and date to view students.</p>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Attendance</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+    // Fetch trainees when course or date is selected
+    function fetchTrainees() {
+        const courseId = document.getElementById("course").value;
+        const date = document.getElementById("date").value;
+        const traineeList = document.getElementById("trainee-list");
+
+        if (courseId && date) {
+            fetch(`/get-trainees/?course_id=${courseId}&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    traineeList.innerHTML = ""; // Clear existing list
+                    if (data.trainees && data.trainees.length > 0) {
+                        data.trainees.forEach(trainee => {
+                            traineeList.innerHTML += `
+                                <div class="form-group">
+                                    <label>${trainee.name}</label>
+                                    <div>
+                                        <label style="margin-left:10px; margin-right:25px;">
+                                            <input type="checkbox" name="present-${trainee.id}" value="Present" class="attendance-checkbox present-checkbox" data-trainee-id="${trainee.id}"> Present
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="absent-${trainee.id}" value="Absent" class="attendance-checkbox absent-checkbox" data-trainee-id="${trainee.id}"> Absent
+                                        </label>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        // Add event listeners to ensure only one checkbox can be marked
+                        document.querySelectorAll(".attendance-checkbox").forEach(checkbox => {
+                            checkbox.addEventListener("change", function () {
+                                const traineeId = this.dataset.traineeId;
+                                const presentCheckbox = document.querySelector(`.present-checkbox[data-trainee-id="${traineeId}"]`);
+                                const absentCheckbox = document.querySelector(`.absent-checkbox[data-trainee-id="${traineeId}"]`);
+
+                                if (this.checked) {
+                                    // Uncheck the other checkbox
+                                    if (this === presentCheckbox) {
+                                        absentCheckbox.checked = false;
+                                    } else {
+                                        presentCheckbox.checked = false;
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        traineeList.innerHTML = "<p>No trainees found for this course and date.</p>";
+                    }
+                })
+                .catch(error => {
+                    traineeList.innerHTML = "<p>Error fetching trainees. Please try again.</p>";
+                    console.error(error);
+                });
+        }
+    }
+
+    // Event listeners for course and date fields
+    document.getElementById("course").addEventListener("change", fetchTrainees);
+    document.getElementById("date").addEventListener("change", fetchTrainees);
+</script>
+{% endblock %}

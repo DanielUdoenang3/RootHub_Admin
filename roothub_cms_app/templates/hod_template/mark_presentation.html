@@ -1,0 +1,102 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% block page_title %}Mark Presentaion{% endblock %}
+{% block title %}Mark Presentaion{% endblock %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Presentaion</a></li>
+                        <li class="breadcrumb-item active">Mark Presentaion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Mark Presentaion</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="attendance-form" method="post" action="">
+                            {% csrf_token %}
+                            <!-- Course Selection -->
+                            <div class="form-group col-sm-8">
+                                <label for="course">Select Course</label>
+                                <select name="course_id" id="course" class="form-control" required>
+                                    <option value="" disabled selected>Select a course</option>
+                                    {% for course in courses %}
+                                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-8">
+                                <label for="course">Select Trainee to be Marked</label>
+                                <select name="trainee_id" id="trainee-list" class="form-control" required>
+                                    <option value="" disabled selected>Select a course to select Trainee</option>
+                                </select>
+                            </div>
+
+                            <!-- Date Selection -->
+                            <div class="form-group col-sm-8">
+                                <label for="date">Select Date</label>
+                                <input type="date" name="date" id="date" class="form-control" required>
+                            </div>
+
+                            <div class="form-group col-sm-8">
+                                <label for="content_score">Enter Trainee Content Score</label>
+                                <input type="number" name="content_score" class="form-control" id="content_score" placeholder="Enter Content Score" required>
+                            </div>
+                            
+                            <div class="form-group col-sm-8">
+                                <label for="appearance_score">Enter Trainee Appearance Score</label>
+                                <p><input type="number" name="appearance_score" class="form-control" id="appearance_score" placeholder="Enter Appearance Score" equired></p>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Presentaion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+    document.getElementById("course").addEventListener("change", function () {
+        const courseId = this.value;
+        const date = document.getElementById("date").value;
+        const traineeList = document.getElementById("trainee-list");
+
+        if (courseId) {
+            fetch(`/get-trainees/?course_id=${courseId}&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    traineeList.innerHTML = ""; // Clear existing list
+                    if (data.trainees.length === 0) {
+                        traineeList.innerHTML = "<p>No students found for this course.</p>";
+                    } else {
+                        data.trainees.forEach(trainee => {
+                            traineeList.innerHTML += `
+                                <option value="${trainee.id}">${trainee.name}</option>
+                            `;
+                        });
+                    }
+                });
+        }
+    });
+
+    document.getElementById("date").addEventListener("change", function () {
+        document.getElementById("course").dispatchEvent(new Event("change"));
+    });
+</script>
+{% endblock %}
